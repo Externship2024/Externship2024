@@ -1,7 +1,14 @@
-import Message from './Message';
+// import ButtonGroup from "./components/ButtonGroup";
+// import NavButton from "./components/NavButton";
+import NavBar from "./components/NavBar";
 
 function App() {
-  return <div><Message /></div>;
+  return (
+    <div>
+      {/* <ButtonGroup /> */}
+      <NavBar />
+    </div>
+  );
 }
 
 export default App;
