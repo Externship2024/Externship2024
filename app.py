@@ -21,12 +21,12 @@ def get_requested_rides():
 @app.route('/rides/offered', methods=['POST'])
 def add_offered_ride():
     data = request.get_json()
-    required_fields = ['departure_time', 'departure_location', 'destination', 'available_seats', 'cost_per_seat']
+    required_fields = ['contact_info', 'departure_time', 'departure_location', 'destination', 'available_seats', 'cost_per_seat']
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Missing required fields"}), 400
 
     offered_ride = {
-        "id": len(offered_rides) + 1,
+        "contact_info": data['contact_info'],
         "departure_time": data['departure_time'],
         "departure_location": data['departure_location'],
         "destination": data['destination'],
@@ -39,12 +39,12 @@ def add_offered_ride():
 @app.route('/rides/requested', methods=['POST'])
 def add_requested_ride():
     data = request.get_json()
-    required_fields = ['departure_time', 'departure_location', 'destination']
+    required_fields = ['contact_info', 'departure_time', 'departure_location', 'destination']
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Missing required fields"}), 400
 
     requested_ride = {
-        "id": len(requested_rides) + 1,
+        "contact_info": data['contact_info'],
         "departure_time": data['departure_time'],
         "departure_location": data['departure_location'],
         "destination": data['destination']
