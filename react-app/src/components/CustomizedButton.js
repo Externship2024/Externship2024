@@ -1,11 +1,9 @@
-function CustomizeButton({ property, icon, alt, label, onClick, target }) {
+function CustomizeButton({ property, icon, alt, label, onClick }) {
   return (
     <button
       type="button"
       className={`btn btn-${property}`}
       onClick={onClick}
-      data-bs-toggle="modal"
-      data-bs-target={target}
     >
       {icon && (
         <img
