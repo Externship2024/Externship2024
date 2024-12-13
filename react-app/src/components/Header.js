@@ -1,122 +1,85 @@
-// import logo from "../logo.svg";
-// import default_icon from "../images/plus_icon.png";
-// import blue_icon from "../images/plus_icon_blue.png";
+import CustomizedButton from "./CustomizedButton";
+import default_plus_icon from "../images/plus_icon.png";
+import blue_plus_icon from "../images/plus_icon_blue.png";
 
 import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Input,
-  Button,
-  Navbar,
-  Nav,
-  NavbarBrand,
-  NavLink,
-  NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  Container, Row, Col, Form, Input, Button, Navbar, Nav,
+  NavbarBrand, NavLink, NavItem,
 } from "reactstrap";
 
-const AVATAR =
-  "https://www.gravatar.com/avatar/429e504af19fc3e1cfa5c4326ef3394c?s=240&d=mm&r=pg";
-
-const Header = () => {
+function Header() {
   return (
     <header>
       <Navbar
         fixed="top"
         color="light"
         light
-        expand="xs"
+        expand="md"
         className="border-bottom border-gray bg-white"
-        style={{ height: 80 }}
       >
         <Container>
-          <Row g-0 className="position-relative w-100 align-items-center">
-            <Col className="d-none d-lg-flex justify-content-start">
-              <Nav className="mrx-auto" navbar>
-                <NavItem className="d-flex align-items-center">
-                  <NavLink className="font-weight-bold" href="/">
-                    <img
-                      src={AVATAR}
-                      alt="avatar"
-                      className="img-fluid rounded-circle"
-                      style={{ width: 36 }}
-                    />
+          <Row className="w-100">
+            <Col xs="4" className="d-flex justify-content-start align-items-center">
+              <NavbarBrand
+                className="d-inline-block p-0 me-4"
+                href="/"
+              >
+                <CustomizedButton
+                  property="primary"
+                  icon={blue_plus_icon}
+                  alt="blue plus icon"
+                  label="New Request"
+                  onClick={() => console.log('Button clicked')}
+                  target="#formModal" />
+              </NavbarBrand>
+              <Nav className="ml-auto" navbar>
+                <NavItem className="d-flex align-items-center ms-4">
+                  <NavLink className="font-weight-bold link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/">
+                    Requests
                   </NavLink>
                 </NavItem>
-
-                <NavItem className="d-flex align-items-center">
-                  <NavLink className="font-weight-bold" href="/">
-                    Home
-                  </NavLink>
-                </NavItem>
-
-                <NavItem className="d-flex align-items-center">
-                  <NavLink className="font-weight-bold" href="/">
-                    Events
-                  </NavLink>
-                </NavItem>
-
-                <UncontrolledDropdown
-                  className="d-flex align-items-center"
-                  nav
-                  inNavbar
-                >
-                  <DropdownToggle className="font-weight-bold" nav caret>
-                    Learn
-                  </DropdownToggle>
-                  <DropdownMenu end>
-                    <DropdownItem
-                      className="font-weight-bold text-secondary text-uppercase"
-                      header
-                      disabled
-                    >
-                      Learn React
-                    </DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>Documentation</DropdownItem>
-                    <DropdownItem>Tutorials</DropdownItem>
-                    <DropdownItem>Courses</DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
               </Nav>
             </Col>
 
-            <Col className="d-flex justify-content-xs-start justify-content-lg-center">
-              <NavbarBrand
-                className="d-inline-block p-0"
-                href="/"
-                style={{ width: 80 }}
-              >
-                <img
-                  src={logo}
-                  alt="logo"
-                  className="position-relative img-fluid"
-                />
-              </NavbarBrand>
-            </Col>
-
-            <Col className="d-none d-lg-flex justify-content-end">
-              <Form inline>
+            <Col xs="4" className="d-flex justify-content-center align-items-center">
+              <Form className="d-flex align-items-center">
                 <Input
                   type="search"
-                  className="mr-3"
-                  placeholder="Search React Courses"
+                  className="mx-2"
+                  placeholder="Search rides"
                 />
                 <Button type="submit" color="info" outline>
                   Search
                 </Button>
               </Form>
             </Col>
+
+            <Col xs="4" className="d-flex justify-content-end align-items-center">
+              <Nav className="ml-auto" navbar>
+                <NavItem className="d-flex align-items-center me-4">
+                  <NavLink className="font-weight-bold link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/">
+                    Availabilities
+                  </NavLink>
+                </NavItem>
+              </Nav>
+              <NavbarBrand
+                className="d-inline-block p-0 ms-4"
+                href="/"
+              >
+                <CustomizedButton
+                  property="secondary"
+                  icon={default_plus_icon}
+                  alt="default plus icon"
+                  label="New Availability"
+                  onClick={() => console.log('Button clicked')}
+                  target="#formModal" />
+              </NavbarBrand>
+            </Col>
           </Row>
         </Container>
       </Navbar>
     </header>
   );
-};
+}
 
 export default Header;
