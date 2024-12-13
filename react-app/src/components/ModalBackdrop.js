@@ -9,11 +9,11 @@ function ModalBackdrop({ title, FormComponent, modal, toggle, handleSubmit }) {
           <FormComponent handleSubmit={handleSubmit} />
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Post
-          </Button>
           <Button color="secondary" onClick={toggle}>
             Cancel
+          </Button>
+          <Button color="primary" onClick={toggle}>
+            Post
           </Button>
         </ModalFooter>
       </Modal>

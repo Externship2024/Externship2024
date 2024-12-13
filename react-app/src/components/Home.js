@@ -2,10 +2,14 @@ import { useState } from "react";
 
 import default_plus_icon from "../images/plus_icon.png";
 import blue_plus_icon from "../images/plus_icon_blue.png";
+import offer_ride_icon from "../images/offer_ride_icon.png";
+import request_ride_icon from "../images/request_ride_icon.png";
+
 import CustomizedButton from "./CustomizedButton";
 import ModalBackdrop from "./ModalBackdrop";
 import RequestForm from "./RequestForm";
 import OfferForm from "./OfferForm";
+import TwoColLayout from "./TwoColLayout";
 
 import {
   Container, Row, Col, Form, Input, Button, Navbar, Nav,
@@ -18,6 +22,7 @@ function Home() {
     title: "",
   });
   const [formComponent, setFormComponent] = useState(null);
+  const [colLayout, setColLayout] = useState(false);
 
   const toggle = () => setModal(!modal);
 
@@ -38,6 +43,10 @@ function Home() {
     toggle();
   };
 
+  const showColLayout = () => {
+    setColLayout(true);
+  };
+
   return (
     <header>
       <Navbar
@@ -50,25 +59,20 @@ function Home() {
         <Container>
           <Row className="w-100">
             <Col xs="auto" className="d-flex justify-content-start align-items-center">
-              <NavbarBrand
-                className="d-inline-block p-0 me-4"
-              >
-                <CustomizedButton
-                  property="primary"
-                  icon={blue_plus_icon}
-                  alt="blue plus icon"
-                  label="New Request"
-                  onClick={() => openRequestForm()}
-                />
-              </NavbarBrand>
-              <Nav className="ml-auto" navbar>
-                <NavItem className="d-flex align-items-center ms-4">
-                  <NavLink className="font-weight-bold link-primary link-offset-2 
-                  link-underline-opacity-25 link-underline-opacity-100-hover" href="/">
-                    Requesting rides
-                  </NavLink>
-                </NavItem>
-              </Nav>
+              <CustomizedButton
+                property="primary"
+                icon={blue_plus_icon}
+                alt="blue plus icon"
+                label="New Request"
+                onClick={() => openRequestForm()}
+              />
+              <CustomizedButton
+                property="outline-primary"
+                icon={request_ride_icon}
+                alt="request ride icon"
+                label="Requesting rides"
+                onClick={showColLayout}
+              />
             </Col>
 
             <Col xs className="d-flex justify-content-center align-items-center">
@@ -85,25 +89,20 @@ function Home() {
             </Col>
 
             <Col xs="auto" className="d-flex justify-content-end align-items-center">
-              <Nav className="ml-auto" navbar>
-                <NavItem className="d-flex align-items-center me-4">
-                  <NavLink className="font-weight-bold link-secondary link-offset-2 
-                  link-underline-opacity-25 link-underline-opacity-100-hover" href="/">
-                    Offering rides
-                  </NavLink>
-                </NavItem>
-              </Nav>
-              <NavbarBrand
-                className="d-inline-block p-0 ms-4"
-              >
-                <CustomizedButton
-                  property="secondary"
-                  icon={default_plus_icon}
-                  alt="default plus icon"
-                  label="New Offer"
-                  onClick={() => openOfferForm()}
-                />
-              </NavbarBrand>
+              <CustomizedButton
+                property="outline-secondary"
+                icon={offer_ride_icon}
+                alt="offer ride icon"
+                label="Offering rides"
+              // onClick={() => openRequestForm()}
+              />
+              <CustomizedButton
+                property="secondary"
+                icon={default_plus_icon}
+                alt="default plus icon"
+                label="New Offer"
+                onClick={() => openOfferForm()}
+              />
             </Col>
           </Row>
         </Container>
@@ -115,6 +114,12 @@ function Home() {
         toggle={toggle}
         handleSubmit={handleSubmit}
       />
+      {colLayout && (
+        <Row className="mt-4">
+          <Col>
+            <TwoColLayout />
+          </Col>
+        </Row>)}
     </header>
   );
 }

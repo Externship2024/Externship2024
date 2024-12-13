@@ -3,6 +3,7 @@ function CustomizeButton({ property, icon, alt, label, onClick }) {
     <button
       type="button"
       className={`btn btn-${property}`}
+      style={{ marginRight: .25 + 'em' }}
       onClick={onClick}
     >
       {icon && (
