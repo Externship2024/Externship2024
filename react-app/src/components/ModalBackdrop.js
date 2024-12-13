@@ -1,12 +1,12 @@
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-function ModalBackdrop({ title, body, modal, toggle }) {
+function ModalBackdrop({ title, FormComponent, modal, toggle, handleSubmit }) {
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle} backdrop="static">
         <ModalHeader >{title}</ModalHeader>
         <ModalBody>
-          {body}
+          <FormComponent handleSubmit={handleSubmit} />
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
