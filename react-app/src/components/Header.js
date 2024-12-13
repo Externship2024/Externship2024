@@ -37,6 +37,9 @@ function Header() {
             <Col xs="auto" className="d-flex justify-content-start align-items-center">
               <NavbarBrand
                 className="d-inline-block p-0 me-4"
+            <Col xs="4" className="d-flex justify-content-start align-items-center">
+              <NavbarBrand
+                className="d-inline-block p-0 me-4"
               >
                 <CustomizedButton
                   property="primary"
@@ -47,10 +50,11 @@ function Header() {
                 />
               </NavbarBrand>
               <Nav className="ml-auto" navbar>
+                <Nav className="ml-auto" navbar>
                 <NavItem className="d-flex align-items-center ms-4">
                   <NavLink className="font-weight-bold link-primary link-offset-2 
                   link-underline-opacity-25 link-underline-opacity-100-hover" href="/">
-                    Requests
+                    Requesting Rides
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -74,7 +78,7 @@ function Header() {
                 <NavItem className="d-flex align-items-center me-4">
                   <NavLink className="font-weight-bold link-secondary link-offset-2 
                   link-underline-opacity-25 link-underline-opacity-100-hover" href="/">
-                    Offers
+                    Offerring Rides
                   </NavLink>
                 </NavItem>
               </Nav>
