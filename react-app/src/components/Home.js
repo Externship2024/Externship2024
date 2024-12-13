@@ -12,7 +12,7 @@ import {
   NavbarBrand, NavLink, NavItem,
 } from "reactstrap";
 
-function Header() {
+function Home() {
   const [modal, setModal] = useState(false);
   const [modalProps, setModalProps] = useState({
     title: "",
@@ -119,4 +119,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Home;
