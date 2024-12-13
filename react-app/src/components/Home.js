@@ -4,6 +4,8 @@ import default_plus_icon from "../images/plus_icon.png";
 import blue_plus_icon from "../images/plus_icon_blue.png";
 import CustomizedButton from "./CustomizedButton";
 import ModalBackdrop from "./ModalBackdrop";
+import RequestForm from "./RequestForm";
+import OfferForm from "./OfferForm";
 
 import {
   Container, Row, Col, Form, Input, Button, Navbar, Nav,
@@ -14,12 +16,25 @@ function Header() {
   const [modal, setModal] = useState(false);
   const [modalProps, setModalProps] = useState({
     title: "",
-    body: ""
   });
+  const [formComponent, setFormComponent] = useState(null);
 
   const toggle = () => setModal(!modal);
-  const onButtonClick = (title, body) => {
-    setModalProps({ title, body });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    toggle();
+  };
+
+  const openRequestForm = () => {
+    setModalProps({ title: "Adding request" });
+    setFormComponent(() => RequestForm);
+    toggle();
+  };
+
+  const openOfferForm = () => {
+    setModalProps({ title: "Adding offer" });
+    setFormComponent(() => OfferForm);
     toggle();
   };
 
@@ -43,14 +58,14 @@ function Header() {
                   icon={blue_plus_icon}
                   alt="blue plus icon"
                   label="New Request"
-                  onClick={() => onButtonClick("Adding request", "Text")}
+                  onClick={() => openRequestForm()}
                 />
               </NavbarBrand>
               <Nav className="ml-auto" navbar>
                 <NavItem className="d-flex align-items-center ms-4">
                   <NavLink className="font-weight-bold link-primary link-offset-2 
                   link-underline-opacity-25 link-underline-opacity-100-hover" href="/">
-                    Requests
+                    Requesting rides
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -74,7 +89,7 @@ function Header() {
                 <NavItem className="d-flex align-items-center me-4">
                   <NavLink className="font-weight-bold link-secondary link-offset-2 
                   link-underline-opacity-25 link-underline-opacity-100-hover" href="/">
-                    Offers
+                    Offering rides
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -86,7 +101,7 @@ function Header() {
                   icon={default_plus_icon}
                   alt="default plus icon"
                   label="New Offer"
-                  onClick={() => onButtonClick("Adding offer", "Text")}
+                  onClick={() => openOfferForm()}
                 />
               </NavbarBrand>
             </Col>
@@ -95,9 +110,10 @@ function Header() {
       </Navbar>
       <ModalBackdrop
         title={modalProps.title}
-        body={modalProps.body}
+        FormComponent={formComponent}
         modal={modal}
         toggle={toggle}
+        handleSubmit={handleSubmit}
       />
     </header>
   );
