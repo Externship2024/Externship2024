@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Row, Col, Card, CardBody, CardTitle, CardText } from 'reactstrap';
 
 function TwoColLayout() {
