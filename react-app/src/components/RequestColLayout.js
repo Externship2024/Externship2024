@@ -1,6 +1,6 @@
-import { Container, Row, Col, Card, CardBody, CardTitle, CardText } from 'reactstrap';
+import { Container, Row, Col, Card, CardBody, CardText } from 'reactstrap';
 
-function TwoColLayout() {
+function RequestColLayout() {
     return (
         <Container style={{ marginTop: 3 + 'em' }}>
             <Row md="4" sm="2" xs="1">
@@ -33,4 +33,4 @@ function TwoColLayout() {
     );
 }
 
-export default TwoColLayout;
+export default RequestColLayout;

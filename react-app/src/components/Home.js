@@ -9,43 +9,44 @@ import CustomizedButton from "./CustomizedButton";
 import ModalBackdrop from "./ModalBackdrop";
 import RequestForm from "./RequestForm";
 import OfferForm from "./OfferForm";
-import TwoColLayout from "./TwoColLayout";
+import RequestColLayout from "./RequestColLayout";
+import OfferColLayout from "./OfferColLayout";
 
 import {
-  Container, Row, Col, Form, Input, Button, Navbar, Nav,
-  NavbarBrand, NavLink, NavItem,
+  Container, Row, Col, Form, Input, Button, Navbar,
 } from "reactstrap";
 
 function Home() {
   const [modal, setModal] = useState(false);
-  const [modalProps, setModalProps] = useState({
-    title: "",
-  });
+  const [modalProps, setModalProps] = useState({ title: "" });
   const [formComponent, setFormComponent] = useState(null);
-  const [colLayout, setColLayout] = useState(false);
+  const [activeButton, setActiveButton] = useState("request");
 
-  const toggle = () => setModal(!modal);
+  const toggleModal = () => setModal(!modal);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    toggle();
+    // pass
   };
 
   const openRequestForm = () => {
     setModalProps({ title: "Adding request" });
     setFormComponent(() => RequestForm);
-    toggle();
+    toggleModal();
   };
 
   const openOfferForm = () => {
     setModalProps({ title: "Adding offer" });
     setFormComponent(() => OfferForm);
-    toggle();
+    toggleModal();
   };
 
-  const showColLayout = () => {
-    setColLayout(true);
-  };
+  const displayRequestColLayout = () => {
+    setActiveButton("request");
+  }
+
+  const displayOfferColLayout = () => {
+    setActiveButton("offer");
+  }
 
   return (
     <header>
@@ -67,11 +68,11 @@ function Home() {
                 onClick={() => openRequestForm()}
               />
               <CustomizedButton
-                property="outline-primary"
+                property={activeButton === "request" ? "primary" : "outline-primary"}
                 icon={request_ride_icon}
                 alt="request ride icon"
                 label="Requesting rides"
-                onClick={showColLayout}
+                onClick={displayRequestColLayout}
               />
             </Col>
 
@@ -90,11 +91,11 @@ function Home() {
 
             <Col xs="auto" className="d-flex justify-content-end align-items-center">
               <CustomizedButton
-                property="outline-secondary"
+                property={activeButton === "offer" ? "secondary" : "outline-secondary"}
                 icon={offer_ride_icon}
                 alt="offer ride icon"
                 label="Offering rides"
-              // onClick={() => openRequestForm()}
+                onClick={displayOfferColLayout}
               />
               <CustomizedButton
                 property="secondary"
@@ -111,13 +112,19 @@ function Home() {
         title={modalProps.title}
         FormComponent={formComponent}
         modal={modal}
-        toggle={toggle}
+        toggle={toggleModal}
         handleSubmit={handleSubmit}
       />
-      {colLayout && (
+      {activeButton === "request" && (
         <Row className="mt-4">
           <Col>
-            <TwoColLayout />
+            <RequestColLayout />
+          </Col>
+        </Row>)}
+      {activeButton === "offer" && (
+        <Row className="mt-4">
+          <Col>
+            <OfferColLayout />
           </Col>
         </Row>)}
     </header>
