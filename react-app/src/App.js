@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { Container, Row, Col, Modal } from 'reactstrap';
-import Header from './components/Header';
+import Home from './components/Home';
 
 function App() {
   return (
     <>
-      <Header />
+      <Home />
     </>
   );
 }
