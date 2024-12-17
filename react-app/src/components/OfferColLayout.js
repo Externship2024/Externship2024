@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, CardBody, CardText } from 'reactstrap';
+import { Container, Row, Col, Card, CardBody, CardText, Button } from 'reactstrap';
 
 function OfferColLayout() {
     return (
@@ -18,6 +18,16 @@ function OfferColLayout() {
                                 Available seats: 3 <br />
                                 Cost per seat: $10 <br />
                             </CardText>
+                            <Row className="w-100">
+                                <Col className="d-flex justify-content-between">
+                                    <Button color="success">
+                                        Edit
+                                    </Button>
+                                    <Button color="danger" className="font-weight-bold">
+                                        Delete
+                                    </Button>
+                                </Col>
+                            </Row>
                         </CardBody>
                     </Card>
                 </Col>
