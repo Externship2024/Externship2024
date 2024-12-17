@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     console.log("useEffect is running")
-    fetch("/datatest").then((res) =>
+    fetch("https://externship2024backend.vercel.app/datatest").then((res) =>
       res.json().then((data) => {
         setdata({
           status: data.status,
