@@ -4,6 +4,9 @@ function OfferColLayout() {
     return (
         <Container style={{ marginTop: 3 + 'em' }}>
             <Row md="4" sm="2" xs="1">
+                <h1>Offers</h1>
+            </Row>
+            <Row md="4" sm="2" xs="1">
                 <Col md="6">
                     <Card>
                         <CardBody>

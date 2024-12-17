@@ -1,9 +1,11 @@
 import { useState } from "react";
 
-import default_plus_icon from "../images/plus_icon.png";
+import pink_plus_icon from "../images/pink_plus_icon.png";
 import blue_plus_icon from "../images/plus_icon_blue.png";
-import offer_ride_icon from "../images/offer_ride_icon.png";
-import request_ride_icon from "../images/request_ride_icon.png";
+import offer_ride_icon from "../images/gray_offer_ride_icon.png";
+import green_offer_ride_icon from "../images/green_offer_ride_icon.png";
+import request_ride_icon from "../images/gray_request_ride_icon.png";
+import yellow_request_ride_icon from "../images/yellow_request_ride_icon.png";
 
 import CustomizedButton from "./CustomizedButton";
 import ModalBackdrop from "./ModalBackdrop";
@@ -12,9 +14,7 @@ import OfferForm from "./OfferForm";
 import RequestColLayout from "./RequestColLayout";
 import OfferColLayout from "./OfferColLayout";
 
-import {
-  Container, Row, Col, Form, Input, Button, Navbar,
-} from "reactstrap";
+import { Container, Row, Col, Navbar, } from 'reactstrap';
 
 function Home() {
   const [modal, setModal] = useState(false);
@@ -61,47 +61,40 @@ function Home() {
           <Row className="w-100">
             <Col xs="auto" className="d-flex justify-content-start align-items-center">
               <CustomizedButton
-                property="primary"
                 icon={blue_plus_icon}
-                alt="blue plus icon"
+                alt="default plus icon"
                 label="New Request"
+                bgColor="#0d6efd"
                 onClick={() => openRequestForm()}
               />
+            </Col>
+
+            <Col xs="auto" className="d-flex justify-content-start align-items-center">
               <CustomizedButton
-                property={activeButton === "request" ? "primary" : "outline-primary"}
-                icon={request_ride_icon}
+                icon={activeButton === "request" ? yellow_request_ride_icon : request_ride_icon}
                 alt="request ride icon"
                 label="Requesting rides"
+                bgColor={activeButton === "request" ? "#f79605" : "#6c757d"}
                 onClick={displayRequestColLayout}
               />
             </Col>
 
-            <Col xs className="d-flex justify-content-center align-items-center">
-              <Form className="d-flex align-items-center">
-                <Input
-                  type="search"
-                  className="mx-2"
-                  placeholder="Search rides"
-                />
-                <Button type="submit" color="primary" outline>
-                  Search
-                </Button>
-              </Form>
+            <Col xs="auto" className="d-flex justify-content-end align-items-center">
+              <CustomizedButton
+                icon={activeButton === "offer" ? green_offer_ride_icon : offer_ride_icon}
+                alt="offer ride icon"
+                label="Offering rides"
+                bgColor={activeButton === "offer" ? "#7ab01e" : "#6c757d"}
+                onClick={displayOfferColLayout}
+              />
             </Col>
 
             <Col xs="auto" className="d-flex justify-content-end align-items-center">
               <CustomizedButton
-                property={activeButton === "offer" ? "secondary" : "outline-secondary"}
-                icon={offer_ride_icon}
-                alt="offer ride icon"
-                label="Offering rides"
-                onClick={displayOfferColLayout}
-              />
-              <CustomizedButton
-                property="secondary"
-                icon={default_plus_icon}
+                icon={pink_plus_icon}
                 alt="default plus icon"
                 label="New Offer"
+                bgColor="#b01e7a"
                 onClick={() => openOfferForm()}
               />
             </Col>

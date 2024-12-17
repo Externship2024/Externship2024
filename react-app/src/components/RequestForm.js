@@ -19,6 +19,14 @@ function RequestForm({ handleSubmit }) {
                 <Label for="destination">Destination</Label>
                 <Input type="text" name="destination" id="destination" required />
             </FormGroup>
+            <FormGroup>
+                <Label for="needed_seats">Needed Seats</Label>
+                <Input type="number" min="0" max="15" name="needed_seats" id="needed_seats" required placeholder="i.e. excluding driver seat" />
+            </FormGroup>
+            <FormGroup>
+                <Label for="cost_per_seat">Cost per Seat</Label>
+                <Input type="number" min="0" max="100" name="cost_per_seat" id="cost_per_seat" />
+            </FormGroup>
         </Form>
     )
 }
