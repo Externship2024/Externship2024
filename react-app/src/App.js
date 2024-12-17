@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+
 import './css/custom.css';
 
-import { Container, Row, Col, Modal } from 'reactstrap';
 import Home from './components/Home';
+import Login from './pages/Login';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const[data, setdata] = useState({
-    status:"test",
-    name:"test",
-    contact:"test",
-    from:"test",
-    to:"test",
-    pay:0,
-    seats:0
+  const [data, setData] = useState({
+    status: "test",
+    name: "test",
+    contact: "test",
+    from: "test",
+    to: "test",
+    pay: 0,
+    seats: 0
   })
 
   useEffect(() => {
     console.log("useEffect is running")
     fetch("https://externship2024backend.vercel.app/datatest").then((res) =>
       res.json().then((data) => {
-        setdata({
+        setData({
           status: data.status,
           name: data.name,
           contact: data.contact,
@@ -36,7 +39,17 @@ function App() {
 
   return (
     <>
-      <Home />
+      {isLoggedIn ? (
+        <Home data={data} />
+      ) : (
+        //   <Router>
+        //     <Routes>
+        //       <Route path="/" element={<Home />} />
+        //     </Routes>
+        //   </Router>
+        // ) : (
+        <Login onLogin={setIsLoggedIn} />
+      )}
       testing
       {data.name}
     </>
