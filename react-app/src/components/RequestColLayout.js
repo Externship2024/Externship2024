@@ -1,6 +1,58 @@
-import { Container, Row, Col, Card, CardBody, CardText, Button } from 'reactstrap';
+import { useState } from 'react';
+import { Container, Row, Col, Card, CardTitle, CardBody, CardText, Button } from 'reactstrap';
+
+const cardData = {
+    contactInfo: '1234567890',
+    departureTime: '12:00 PM',
+    from: 'Sayles',
+    to: 'Tin Tea',
+    neededSeats: '2',
+    costPerSeat: '10'
+};
 
 function RequestColLayout() {
+    const [cards, setCards] = useState([
+        {
+            id: 1, title: '1', text: (
+                <>
+                    Contact info: {cardData.contactInfo} < br />
+                    Departure time: {cardData.departureTime} < br />
+                    From: {cardData.from} < br />
+                    To: {cardData.to} < br />
+                    Needed seats: {cardData.neededSeats} < br />
+                    Cost per seat: {cardData.costPerSeat} < br />
+                </>
+            )
+        }, {
+            id: 2, title: '2', text: (
+                <>
+                    Contact info: {cardData.contactInfo} < br />
+                    Departure time: {cardData.departureTime} < br />
+                    From: {cardData.from} < br />
+                    To: {cardData.to} < br />
+                    Needed seats: {cardData.neededSeats} < br />
+                    Cost per seat: {cardData.costPerSeat} < br />
+                </>
+            )
+        },
+        {
+            id: 3, title: '3', text: (
+                <>
+                    Contact info: {cardData.contactInfo} < br />
+                    Departure time: {cardData.departureTime} < br />
+                    From: {cardData.from} < br />
+                    To: {cardData.to} < br />
+                    Needed seats: {cardData.neededSeats} < br />
+                    Cost per seat: {cardData.costPerSeat} < br />
+                </>
+            )
+        },
+    ]);
+
+    const deleteCard = (id) => {
+        setCards(cards.filter(card => card.id !== id));
+    };
+
     return (
         <Container style={{ marginTop: 3 + 'em' }}>
             <Row md="4" sm="2" xs="1">
@@ -8,44 +60,19 @@ function RequestColLayout() {
             </Row>
             <Row md="4" sm="2" xs="1">
                 <Col md="6">
-                    <Card>
-                        <CardBody>
-                            <CardText>
-                                Contact info: 123-456-7890 <br />
-                                Departure time: 12:00 PM <br />
-                                From: Sayles <br />
-                                To: Tin Tea <br />
-                                Needed seats: 2 <br />
-                                Cost per seat: $10 <br />
-                            </CardText>
-                            <Row className="w-100">
-                                <Col className="d-flex justify-content-between">
-                                    <Button color="success">
-                                        Edit
-                                    </Button>
-                                    <Button color="danger" className="font-weight-bold">
-                                        Delete
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </CardBody>
-                    </Card>
+                    {cards.map(card => (
+                        <Card key={card.id} className="mb-3">
+                            <CardBody>
+                                <CardTitle>{card.title}</CardTitle>
+                                <CardText>{card.text}</CardText>
+                                <Button color="danger" onClick={() => deleteCard(card.id)}>
+                                    Delete
+                                </Button>
+                            </CardBody>
+                        </Card>
+                    ))}
                 </Col>
-                <Col md="6">
-                    <Card>
-                        <CardBody>
-                            <CardText>
-                                Contact info: @user_name <br />
-                                Departure time: 3:00 PM <br />
-                                From: James <br />
-                                To: Asian Market <br />
-                                Needed seats: 1 <br />
-                                Cost per seat: $0 <br />
-                            </CardText>
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
+            </Row >
         </Container >
     );
 }

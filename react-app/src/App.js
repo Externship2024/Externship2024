@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-
 import './css/custom.css';
 
 import Home from './components/Home';
-import Login from './pages/Login';
+import Login from './auth/Login';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,7 +40,7 @@ function App() {
   return (
     <>
       {isLoggedIn ? (
-        <Home data={data} />
+        <Home />
       ) : (
         //   <Router>
         //     <Routes>
