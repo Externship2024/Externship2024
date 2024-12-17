@@ -21,11 +21,11 @@ function OfferForm({ handleSubmit }) {
             </FormGroup>
             <FormGroup>
                 <Label for="available_seats">Available Seats</Label>
-                <Input type="number" name="available_seats" id="available_seats" required />
+                <Input type="number" min="0" max="15" name="available_seats" id="available_seats" required placeholder="i.e. excluding driver seat" />
             </FormGroup>
             <FormGroup>
                 <Label for="cost_per_seat">Cost per Seat</Label>
-                <Input type="number" name="cost_per_seat" id="cost_per_seat" />
+                <Input type="number" min="0" max="100" name="cost_per_seat" id="cost_per_seat" />
             </FormGroup>
         </Form>
     )
