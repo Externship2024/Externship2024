@@ -25,6 +25,7 @@ yarn-error.log*
 # local files
 src/components/SideCard.js
 src/components/Post.js
+src/App.test.js
 
 # vercel
 .vercel
