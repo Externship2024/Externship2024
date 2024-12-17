@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from 'react';
+import './css/custom.css';
 
 import { Container, Row, Col, Modal } from 'reactstrap';
 import Home from './components/Home';

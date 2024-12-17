@@ -1,9 +1,15 @@
-function CustomizeButton({ property, icon, alt, label, onClick }) {
+function CustomizeButton({ icon, alt, label, bgColor, onClick }) {
+  const btnStyle = {
+    // marginRight: .25 + 'em',
+    color: "#fff",
+    backgroundColor: bgColor,
+  }
+
   return (
     <button
       type="button"
-      className={`btn btn-${property}`}
-      style={{ marginRight: .25 + 'em' }}
+      className="btn"
+      style={btnStyle}
       onClick={onClick}
     >
       {icon && (
