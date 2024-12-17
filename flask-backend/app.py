@@ -1,14 +1,25 @@
 #(Placeholder to test for vercel installation)
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 
 offered_rides = []
 requested_rides = []
 
-@app.route('/')
+@app.route('/datatest', methods=['GET'])
 def index():
-    return "hello world"
+    return jsonify({
+        'status':"request",
+        'name':"hudson",
+        'contact':"1234567890",
+        'from':"evans",
+        'to':"target center",
+        'pay':10,
+        'seats':2
+    })
 
 @app.route('/rides/offered', methods=['GET'])
 def get_offered_rides():
@@ -53,4 +64,4 @@ def add_requested_ride():
     return jsonify(requested_ride), 201
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run
