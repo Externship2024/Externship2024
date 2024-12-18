@@ -43,11 +43,11 @@ function Home() {
 
   const displayRequestColLayout = () => {
     setActiveButton("request");
-  }
+  };
 
   const displayOfferColLayout = () => {
     setActiveButton("offer");
-  }
+  };
 
   return (
     <header>
@@ -103,9 +103,9 @@ function Home() {
 
               <Nav className="mrx-auto" navbar>
                 <NavItem className="align-items-center">
-                  <NavLink className="font-weight-bold" href="/">
-                    <img src={avatar_icon} alt="avatar icon" className="img-fluid rounded-circle" style={{ width: 32 }} />
-                  </NavLink>
+                  {/* <NavLink className="font-weight-bold" href="/"> */}
+                  <img src={avatar_icon} alt="avatar icon" className="img-fluid rounded-circle" style={{ width: 32 }} />
+                  {/* </NavLink> */}
                 </NavItem>
               </Nav>
             </Col>
