@@ -4,9 +4,9 @@ import { googleLogout, useGoogleLogin, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import './css/custom.css';
 
-import { useAuthStore } from "./auth/authStore";
+// import { useAuthStore } from "./auth/authStore";
 import Home from './components/Home';
-// import Login from './auth/Login';
+import Login from './auth/Login';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
