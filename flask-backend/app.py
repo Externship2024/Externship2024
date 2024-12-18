@@ -12,7 +12,7 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+#os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 app.secret_key = "fbUQ4ZavHP2r" # for google oauth
 GOOGLE_CLIENT_ID = "929667896534-icmbfv2sq8mu64akqe57ka1t65novl2b.apps.googleusercontent.com"
@@ -21,7 +21,7 @@ client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret
 flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri="http://127.0.0.1:5000/callback"
+    redirect_uri="https://externship2024backend.vercel.app/callback"
     )
 
 offered_rides = [] 
