@@ -1,14 +1,27 @@
 import { useState } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 function Login({ onLogin }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const [user, setUser] = useState([]);
+
+    const handleGoogleLogin = (codeResponse) => {
+        setUser(codeResponse);
+        onLogin(true);
+    };
+
+    const login = useGoogleLogin({
+        onSuccess: handleGoogleLogin,
+        onError: (error) => console.log('Login Failed:', error)
+    });
+
     const handleLogin = (e) => {
         e.preventDefault();
-        // Handle login logic here
-        if (username === 'user' && password === 'password') {
+
+        if (username === 'user' && password === 'pass') {
             onLogin(true);
         } else {
             alert('Invalid credentials');
@@ -19,8 +32,8 @@ function Login({ onLogin }) {
         <Container>
             <Row className="justify-content-center">
                 <Col md="6">
-                    <h2 className="text-center">Login</h2>
-                    <Form onSubmit={handleLogin}>
+                    <h2 className="text-center">Login to your ride-share app</h2>
+                    <Form>
                         <FormGroup>
                             <Label for="username">Username</Label>
                             <Input
@@ -43,9 +56,16 @@ function Login({ onLogin }) {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </FormGroup>
-                        <Button color="primary" type="submit" block>
-                            Login
-                        </Button>
+                        <Row>
+                            <Col className="d-flex justify-content-center">
+                                <Button color="primary" type="submit" block onClick={handleLogin}>
+                                    Login
+                                </Button>
+                                <Button color="secondary" onClick={login} block>
+                                    Sign in with Google 🚀
+                                </Button>
+                            </Col>
+                        </Row>
                     </Form>
                 </Col>
             </Row>
