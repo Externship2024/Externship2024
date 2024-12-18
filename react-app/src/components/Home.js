@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useAuthStore } from './../auth/authStore';
 
 import avatar_icon from "../images/avatar_icon.png";
 import pink_plus_icon from "../images/pink_plus_icon.png";
@@ -15,13 +17,18 @@ import OfferForm from "./OfferForm";
 import RequestColLayout from "./RequestColLayout";
 import OfferColLayout from "./OfferColLayout";
 
-import { Container, Row, Col, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
+import { Container, Row, Col, Navbar, } from 'reactstrap';
+import UserProfile from "./UserProfile";
 
 function Home() {
   const [modal, setModal] = useState(false);
   const [modalProps, setModalProps] = useState({ title: "" });
   const [formComponent, setFormComponent] = useState(null);
   const [activeButton, setActiveButton] = useState("request");
+  const [profile, setProfile] = useState([]);
+  const user = useAuthStore((state) => state.user);
+  console.log(user);
+  // const currentUser = useAuthStore((state) => state.currentUser);
 
   const toggleModal = () => setModal(!modal);
 
@@ -101,13 +108,18 @@ function Home() {
                 />
               </Col>
 
-              <Nav className="mrx-auto" navbar>
-                <NavItem className="align-items-center">
-                  {/* <NavLink className="font-weight-bold" href="/"> */}
-                  <img src={avatar_icon} alt="avatar icon" className="img-fluid rounded-circle" style={{ width: 32 }} />
-                  {/* </NavLink> */}
-                </NavItem>
-              </Nav>
+              <Col xs="auto" className="align-items-center">
+                <CustomizedButton
+                  icon={avatar_icon}
+                  alt="avatar icon"
+                  label="User"
+                  bgColor="#b1b8c4"
+                // onClick={openOfferForm}
+                />
+                {/* <UserProfile className="absolute top-7 right-7" /> */}
+              </Col>
+
+              {/* className="img-fluid rounded-circle" style={{ width: 32 }}  */}
             </Col>
           </Row>
         </Container>
