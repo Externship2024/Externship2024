@@ -7,7 +7,6 @@ class DataSource:
         self.connection = self.connect()
 
     def connect(self):
-        """ Establish the database connection using the config """
         try:
             connection = psycopg2.connect(
                 host=Config.DB_HOST,
@@ -15,7 +14,7 @@ class DataSource:
                 user=Config.DB_USER,
                 password=Config.DB_PASSWORD,
                 port=Config.DB_PORT,
-                sslmode=Config.SSLMODE  # Add SSL mode
+                sslmode=Config.SSLMODE
             )
         except Exception as e:
             print("Connection error: ", e)
@@ -23,7 +22,6 @@ class DataSource:
         return connection
 
     def add_requested_ride(self, ride_data):
-        ''' Inserts a new ride request into the database '''
         try:
             cursor = self.connection.cursor()
             query = """
