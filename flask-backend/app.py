@@ -128,4 +128,4 @@ def protected_area():
     return "Protected <a href='/logout'><button>Logout</button></a>"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run
