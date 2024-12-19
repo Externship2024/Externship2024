@@ -26,7 +26,6 @@ yarn-error.log*
 src/components/SideCard.js
 src/components/Post.js
 src/App.test.js
-src/auth/useLogin.js
 src/auth/AuthContext.js
 
 # vercel

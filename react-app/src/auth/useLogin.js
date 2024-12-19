@@ -14,16 +14,16 @@ function useLogin() {
                 })
                 .then(res => res.data);
 
-            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/make-user/`, {
-                UserID: userInfo.sub,
-            });
+            // const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/make-user/`, {
+            //     UserID: userInfo.sub,
+            // });
 
-            if (res.status === 200) {
-                loginUser(userInfo)
-                console.log(res.data);
-            } else {
-                alert('Error logging in');
-            }
+            // if (res.status === 200) {
+            //     loginUser(userInfo)
+            //     console.log(res.data);
+            // } else {
+            //     alert('Error logging in');
+            // }
         },
     });
 }
