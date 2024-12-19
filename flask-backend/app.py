@@ -1,9 +1,7 @@
-from flask import Flask, request, jsonify
 from Datasource import *
 from flask import Flask, request, jsonify, session, abort, redirect
 import os
 import pathlib
-import requests
 from flask_cors import CORS # for communication with frontend
 from google_auth_oauthlib.flow import Flow
 from google.oauth2 import id_token
@@ -125,6 +123,7 @@ def delete_ride():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
 
 @app.route('/newrequesttest', methods=['GET'])
 def newrequesttest():
@@ -280,5 +279,5 @@ def logout():
 def protected_area():
     return "Protected <a href='/logout'><button>Logout</button></a>"
 
-#if __name__ == '__main__':
-#    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
