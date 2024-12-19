@@ -27,6 +27,10 @@ src/components/SideCard.js
 src/components/Post.js
 src/App.test.js
 src/auth/AuthContext.js
+src/auth/authStore.js
+src/auth/Login.js
+src/auth/useLogin.js
+src/localStorageProvider.js
 
 # vercel
 .vercel

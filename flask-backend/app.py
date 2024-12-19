@@ -219,7 +219,7 @@ def add_offered_ride():
 def add_requested_ride():
     data = request.get_json()
     required_fields = ['contact_info', 'departure_time', 'departure_location', 'destination']
-    if not all(field in data for field in required_fields):
+    if any(field not in data for field in required_fields):
         return jsonify({"error": "Missing required fields"}), 400
 
     requested_ride = {
@@ -235,12 +235,9 @@ def add_requested_ride():
 
 def login_required(function):
     def wrapper(*args, **kwargs):
-        if "google_id" not in session:
-            return abort(401)
-        else:
-            return function()
-    return wrapper
+        return abort(401) if "google_id" not in session else function()
 
+    return wrapper
 
 @app.route("/login")
 def login():
@@ -251,7 +248,7 @@ def login():
 @app.route("/callback")
 def callback():
     flow.fetch_token(authorization_response=request.url)
-    if not session["state"] == request.args["state"]:
+    if session["state"] != request.args["state"]:
         abort(500) #State doesn't match
     credentials = flow.credentials
     request_session = requests.Session()

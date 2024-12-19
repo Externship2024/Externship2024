@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import { googleLogout, useGoogleLogin, GoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
+// import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+// import { googleLogout, useGoogleLogin, GoogleLogin } from '@react-oauth/google';
+// import axios from 'axios';
 import './css/custom.css';
 
 // import { useAuthStore } from "./auth/authStore";
 import Home from './components/Home';
-import Login from './auth/Login';
+// import Login from './auth/Login';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); //CHANGE THIS BACK TO FALSE FOR PRODUCTION RELEASE, THIS IS ONLY TO SIMPLIFY TESTING
+  // const [isLoggedIn, setIsLoggedIn] = useState(true); //CHANGE THIS BACK TO FALSE FOR PRODUCTION RELEASE, THIS IS ONLY TO SIMPLIFY TESTING
   // const currentUser = useAuthStore((state) => state.currentUser);
 
   const [data, setData] = useState({
-    contact:"",
-    departure_time:"",
-    departure_location:"",
-    destination:"",
-    needed_seats:0,
-    cost_per_seat:0
+    contact: "",
+    departure_time: "",
+    departure_location: "",
+    destination: "",
+    needed_seats: 0,
+    cost_per_seat: 0
   })
 
   useEffect(() => {
@@ -39,18 +39,7 @@ function App() {
 
   return (
     <>
-      {isLoggedIn ? (
-        <Home />
-      ) : (
-        //    <Router>
-        //      <Routes>
-        //        <Route path="/" element={<Home />} />
-        //      </Routes>
-        //    </Router>
-        //  ) : (
-        <Login onLogin={setIsLoggedIn} />
-      )}
-      {/* <Home /> */}
+      <Home />
     </>
   );
 }
