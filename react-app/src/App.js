@@ -9,21 +9,19 @@ import Home from './components/Home';
 import Login from './auth/Login';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true); //CHANGE THIS BACK TO FALSE FOR PRODUCTION RELEASE, THIS IS ONLY TO SIMPLIFY TESTING
   // const currentUser = useAuthStore((state) => state.currentUser);
 
   const [data, setData] = useState({
-    status: "test",
-    name: "test",
-    contact: "test",
-    from: "test",
-    to: "test",
-    pay: 0,
-    seats: 0
+    contact:"",
+    departure_time:"",
+    departure_location:"",
+    destination:"",
+    needed_seats:0,
+    cost_per_seat:0
   })
 
   useEffect(() => {
-    console.log("useEffect is running")
     fetch("https://externship2024backend.vercel.app/datatest").then((res) =>
       res.json().then((data) => {
         setData({
@@ -38,7 +36,6 @@ function App() {
       })
     );
   }, []);
-  console.log(data)
 
   return (
     <>
@@ -54,8 +51,6 @@ function App() {
         <Login onLogin={setIsLoggedIn} />
       )}
       {/* <Home /> */}
-      testing
-      {data.name}
     </>
   );
 }
