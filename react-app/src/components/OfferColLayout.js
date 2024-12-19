@@ -7,7 +7,7 @@ function OfferColLayout() {
     useEffect(() => {
         const fetchOffers = async () => {
             try {
-                const response = await fetch("https://externship2024backend.vercel.app/newoffertest");
+                const response = await fetch("https://externship2024backend.vercel.app/available-rides");
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
