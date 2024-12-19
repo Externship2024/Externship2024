@@ -47,7 +47,7 @@ def datatest():
 
 @app.route('/get_upcoming_rides', methods=['GET'])
 def upcoming_requested_rides():
-    """calls datasoure method"""
+    """this method gets all of the upcoming requested rides from the requested_rides table where the departure times are greater than the current time"""
     try:
         rides = get_upcoming_rides()  # Call the function to get rides
         return jsonify(rides), 200
@@ -56,7 +56,7 @@ def upcoming_requested_rides():
 
 @app.route('/available-rides', methods=['GET'])
 def upcoming_available_rides():
-    """calls datasoure method"""
+    """this method gets all of the upcoming available rides from the available_rides table where the departure times are greater than the current time"""
     try:
         rides = get_available_rides()
         return jsonify(rides), 200
@@ -65,7 +65,7 @@ def upcoming_available_rides():
 
 @app.route('/add_ride', methods=['POST'])
 def add_ride_handler():
-    """calls datasoure method"""
+    """adds a requested ride to the requested_rides table"""
     data = request.get_json()  # Assuming data is sent as JSON
     
     # Extract data from the JSON request
@@ -87,7 +87,7 @@ def add_ride_handler():
 
 @app.route('/add_available_ride', methods=['POST'])
 def add_available_ride_route():
-    """calls datasoure method"""
+    """adds an available ride to the available_rides table"""
     data = request.get_json()  # Assuming data is sent as JSON
     ride_id = data.get('ride_id')
     session_id = data.get('session_id')  # Added session_id
@@ -107,7 +107,7 @@ def add_available_ride_route():
     
 @app.route('/delete_ride', methods=['POST'])
 def delete_ride():
-    """calls datasoure method"""
+    """deletes a row from either available_rides or requested_rides depending on if a request or ride id is received. It then matches this id to a row in the respective table, and if the session id of the user matches the session id in that row, deletes it"""
     data = request.get_json()
     
     ride_id = data.get('ride_id')
