@@ -1,56 +1,53 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useAuthStore } from '../auth/authStore';
-import { googleLogout } from '@react-oauth/google';
+import useLogin from "./../auth/useLogin";
+import { useAuthStore } from "./../auth/authStore";
+import { useShallow } from "zustand/react/shallow";
 
-function UserProfile() {
-    const [profile, setProfile] = useState([]);
-    const user = useAuthStore((state) => state.user);
-    console.log(user)
-
-    useEffect(
-        () => {
-            if (user) {
-                axios
-                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                        headers: {
-                            Authorization: `Bearer ${user.access_token}`,
-                            Accept: 'application/json'
-                        }
-                    })
-                    .then((res) => {
-                        setProfile(res.data);
-                    })
-                    .catch((err) => console.log(err));
-            }
-        },
-        [user]
+function UserProfile({ className }) {
+    const googleLogin = useLogin();
+    const [currentUser, logoutUser] = useAuthStore(
+        useShallow((state) => [state.currentUser, state.logoutUser])
     );
 
-    const logOut = () => {
-        googleLogout();
-        setProfile(null);
-    };
+    // function handleLogout() {
+    //     logoutUser();
+    // }
+
+    // const handleGoogleLogin = (codeResponse) => {
+    //     setUser(codeResponse);
+    //     onLogin(true);
+    // };
+
+    // const login = useGoogleLogin({
+    //     onSuccess: handleGoogleLogin,
+    //     onError: (error) => console.log('Login Failed:', error)
+    // });
 
     return (
-        <div>
-            <h2>React Google Login</h2>
-            <br />
-            <br />
-            {profile ? (
-                <div>
-                    <img src={profile.picture} alt="user image" />
-                    <h3>User Logged in</h3>
-                    <p>Name: {profile.name}</p>
-                    <p>Email Address: {profile.email}</p>
-                    <br />
-                    <br />
-                    <button onClick={logOut}>Log out</button>
-                </div>
-            ) : (
-                <button>Sign in with Google</button>
-            )}
-        </div>
+        <main className={className}>
+            {currentUser ?
+                <>
+                    <div className="dropdown dropdown-hover dropdown-end">
+                        <img
+                            src={currentUser.picture}
+                            tabIndex={0}
+                            role="button"
+                            className="btn w-12 h-12 p-0 rounded-full"
+                        />
+                        <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-40">
+                            <li>
+                                <a>Settings</a>
+                            </li>
+                            <li>
+                                <a onClick={logoutUser}>Sign Out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </>
+                :
+                <button onClick={() => googleLogin()} className="btn">
+                    Log in
+                </button>}
+        </main>
     );
 }
 

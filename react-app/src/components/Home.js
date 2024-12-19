@@ -108,16 +108,16 @@ function Home() {
                 />
               </Col>
 
-              <Col xs="auto" className="align-items-center">
+              {/* <Col xs="auto" className="align-items-center">
                 <CustomizedButton
                   icon={avatar_icon}
                   alt="avatar icon"
                   label="User"
                   bgColor="#b1b8c4"
-                // onClick={openOfferForm}
-                />
-                {/* <UserProfile className="absolute top-7 right-7" /> */}
-              </Col>
+                onClick={openOfferForm}
+                /> */}
+              <UserProfile className="absolute top-7 right-7" />
+              {/* </Col> */}
 
               {/* className="img-fluid rounded-circle" style={{ width: 32 }}  */}
             </Col>

@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+// import { SWRConfig } from "swr";
 import App from "./App";
+// import localStorageProvider from "./localStorageProvider.js";
 
 // Bootstrap CSS
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,9 +12,11 @@ import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <GoogleOAuthProvider clientId="397119257310-cgbc31mvn72tpnbf4j8h06h72a9985vi.apps.googleusercontent.com">
-    <React.StrictMode>
+  <React.StrictMode>
+    <GoogleOAuthProvider clientId="397119257310-cgbc31mvn72tpnbf4j8h06h72a9985vi.apps.googleusercontent.com">
+      {/* <SWRConfig value={{ provider: localStorageProvider }}> */}
       <App />
-    </React.StrictMode>
-  </GoogleOAuthProvider>,
+      {/* </SWRConfig> */}
+    </GoogleOAuthProvider>
+  </React.StrictMode>
 );
