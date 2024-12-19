@@ -43,6 +43,28 @@ def datatest():
         'seats':2
     })
 
+@app.route('/newrequesttest', methods=['GET'])
+def newrequesttest():
+    return jsonify({
+        'contact':"1234567890",
+        'departure_time':"12/18/2024 06:30 PM",
+        'departure_location':"evans",
+        'destination':"target center",
+        'needed_seats':2,
+        'cost_per_seat':5
+    })
+
+@app.route('/newoffertest', methods=['GET'])
+def newoffertest():
+    return {
+        'contact':"1234567890",
+        'departure_time':"12/18/2024 06:30 PM",
+        'departure_location':"evans",
+        'destination':"target center",
+        'needed_seats':2,
+        'cost_per_seat':5
+    }
+
 @app.route('/rides/offered', methods=['GET'])
 def get_offered_rides():
     return jsonify(offered_rides)
@@ -133,5 +155,5 @@ def logout():
 def protected_area():
     return "Protected <a href='/logout'><button>Logout</button></a>"
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+#    app.run(debug=True)
