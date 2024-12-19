@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, CardTitle, CardBody, CardText, Button } from
 function RequestColLayout() {
     const [cards, setCards] = useState([]); //initializes array for requests
 
+
     useEffect(() => {
         const fetchRequests = async () => {
             try {
