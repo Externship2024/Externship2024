@@ -8,6 +8,16 @@ from google.oauth2 import id_token
 from google.auth.transport.requests import Request
 import cachecontrol
 import requests
+from flask import Flask, request, jsonify, session, abort, redirect
+import os
+import pathlib
+import requests
+from flask_cors import CORS # for communication with frontend
+from google_auth_oauthlib.flow import Flow
+from google.oauth2 import id_token
+from google.auth.transport.requests import Request
+import cachecontrol
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -23,7 +33,21 @@ flow = Flow.from_client_secrets_file(
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
     redirect_uri="https://externship2024backend.vercel.app/callback"
     )
+CORS(app)
 
+#os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+app.secret_key = "fbUQ4ZavHP2r" # for google oauth
+GOOGLE_CLIENT_ID = "929667896534-icmbfv2sq8mu64akqe57ka1t65novl2b.apps.googleusercontent.com"
+client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
+
+flow = Flow.from_client_secrets_file(
+    client_secrets_file=client_secrets_file,
+    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+    redirect_uri="https://externship2024backend.vercel.app/callback"
+    )
+
+offered_rides = [] 
 offered_rides = [] 
 requested_rides = []
 
@@ -31,7 +55,12 @@ requested_rides = []
 def index():
     return "<a href='/login'><button>Login</button></a>"
 
+@app.route("/")
+def index():
+    return "<a href='/login'><button>Login</button></a>"
+
 @app.route('/datatest', methods=['GET'])
+def datatest():
 def datatest():
     return jsonify({
         'status':"request",
@@ -91,6 +120,7 @@ def add_offered_ride():
     offered_rides.append(offered_ride)
     return jsonify(offered_ride), 201
 
+@app.route('/rides/requested', methods=['POST'])
 @app.route('/rides/requested', methods=['POST'])
 def add_requested_ride():
     data = request.get_json()

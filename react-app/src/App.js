@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { googleLogout, useGoogleLogin, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-
 import './css/custom.css';
 
+// import { useAuthStore } from "./auth/authStore";
 import Home from './components/Home';
 import Login from './auth/Login';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); //CHANGE THIS TO FALSE, TRUE ONLY FOR TESTING PURPOSES
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const currentUser = useAuthStore((state) => state.currentUser);
 
   const [data, setData] = useState({
     contact:"",
@@ -49,6 +50,9 @@ function App() {
         //  ) : (
         <Login onLogin={setIsLoggedIn} />
       )}
+      {/* <Home /> */}
+      testing
+      {data.name}
     </>
   );
 }
