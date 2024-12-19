@@ -7,13 +7,11 @@ function OfferColLayout() {
     useEffect(() => {
         const fetchOffers = async () => {
             try {
-                console.log("Fetching offers...");
                 const response = await fetch("https://externship2024backend.vercel.app/newoffertest");
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const offers = await response.json();
-                console.log("Fetched offers:", offers);
 
                 // structures the data to match the card layout
                 const newCards = offers.map((offer, index) => ({

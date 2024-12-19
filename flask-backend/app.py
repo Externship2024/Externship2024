@@ -52,6 +52,13 @@ def newrequesttest():
         'destination':"target center",
         'needed_seats':2,
         'cost_per_seat':5
+    },{
+        'contact':"0987654321",
+        'departure_time':"12/20/2024 11:00 AM",
+        'departure_location':"burton",
+        'destination':"mall of america",
+        'needed_seats':4,
+        'cost_per_seat':10
     })
 
 @app.route('/newoffertest', methods=['GET'])
