@@ -1,11 +1,10 @@
 """from flask_cors import CORS"""
 from flask import Flask, request, jsonify
-from Datasource import DataSource
+from Datasource import *
 
 
 app = Flask(__name__)
 """CORS(app)"""
-data_source = DataSource()
 
 offered_rides = []
 requested_rides = []
@@ -22,60 +21,83 @@ def index():
         'seats':2
     })
 
-@app.route('/rides/offered', methods=['GET'])
-def get_offered_rides():
-    return jsonify(offered_rides)
 
-@app.route('/rides/requested', methods=['GET'])
-def get_requested_rides():
-    return jsonify(requested_rides)
-
-@app.route('/rides/offered', methods=['POST'])
-def add_offered_ride():
-    data = request.get_json()
-    required_fields = ['contact_info', 'departure_time', 'departure_location', 'destination', 'available_seats', 'cost_per_seat']
-    if not all(field in data for field in required_fields):
-        return jsonify({"error": "Missing required fields"}), 400
-
-    offered_ride = {
-        "contact_info": data['contact_info'],
-        "departure_time": data['departure_time'],
-        "departure_location": data['departure_location'],
-        "destination": data['destination'],
-        "available_seats": data['available_seats'],
-        "cost_per_seat": data['cost_per_seat']
-    }
-    offered_rides.append(offered_ride)
-    return jsonify(offered_ride), 201
-
-@app.route('/add_requested_ride', methods=['POST'])
-def add_requested_ride():
-    ''' Route to add a requested ride to the database '''
-    data = request.json  # Receive JSON data from the request
+@app.route('/get_upcoming_rides', methods=['GET'])
+def upcoming_requested_rides():
     try:
-        # Insert query using psycopg2
-        query = """
-            INSERT INTO requested_rides (
-                contact_info, departure_time, departure_location, destination, required_seats, offer_per_seat
-            ) VALUES (%s, %s, %s, %s, %s, %s)
-        """
-        cursor = data_source.connection.cursor()
-        cursor.execute(query, (
-            data['contact_info'],
-            data['departure_time'],
-            data['departure_location'],
-            data['destination'],
-            data['required_seats'],
-            data['offer_per_seat']
-        ))
-        data_source.connection.commit()
-        cursor.close()
+        rides = get_upcoming_rides()  # Call the function to get rides
+        return jsonify(rides), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/available-rides', methods=['GET'])
+def upcoming_available_rides():
+    try:
+        rides = get_available_rides()
+        return jsonify(rides), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/add_ride', methods=['POST'])
+def add_ride_handler():
+    data = request.get_json()  # Assuming data is sent as JSON
+    
+    # Extract data from the JSON request
+    request_id = data.get('request_id')
+    session_id = data.get('session_id')
+    contact_info = data.get('contact_info')
+    departure_time = data.get('departure_time')  # Ensure this is in proper datetime format
+    departure_location = data.get('departure_location')
+    destination = data.get('destination')
+    required_seats = data.get('required_seats')
+    offer_per_seat = data.get('offer_per_seat')
+    
+    try:
+        # Call the database utility function
+        add_requested_ride(request_id, session_id, contact_info, departure_time, departure_location, destination, required_seats, offer_per_seat)
+        return jsonify({"message": "Requested ride added successfully"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/add_available_ride', methods=['POST'])
+def add_available_ride_route():
+    data = request.get_json()  # Assuming data is sent as JSON
+
+    ride_id = data.get('ride_id')
+    session_id = data.get('session_id')  # Added session_id
+    contact_info = data.get('contact_info')
+    departure_time = data.get('departure_time')  # Ensure this is in proper datetime format
+    departure_location = data.get('departure_location')
+    destination = data.get('destination')
+    available_seats = data.get('available_seats')
+    cost_per_seat = data.get('cost_per_seat')
+
+    try:
+        # Pass session_id to the add_available_ride method
+        add_available_ride(ride_id, session_id, contact_info, departure_time, departure_location, destination, available_seats, cost_per_seat)
+        return jsonify({"message": "Available ride added successfully"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    
+@app.route('/delete_ride', methods=['POST'])
+def delete_ride():
+    data = request.get_json()
+    
+    ride_id = data.get('ride_id')
+    request_id = data.get('request_id') 
+    session_id = data.get('session_id')  
+
+    try:
+        # Ensure at least one ID (ride_id or request_id) is provided
+        if not (ride_id or request_id):
+            return jsonify({"error": "Either ride_id or request_id must be provided"}), 400
         
-        return jsonify({"message": "Ride request added successfully!"}), 201
+        # Call the helper function to delete the ride based on session_id and provided ID
+        delete_specific_ride(ride_id=ride_id, request_id=request_id, session_id=session_id)
+        return jsonify({"message": "Ride deleted successfully"}), 200
 
     except Exception as e:
-        print("Error:", e)  # Print the error in the terminal for debugging
-        return jsonify({"error": "An error occurred while adding the ride request."}), 500
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
-    app.run
+    app.run(debug=True)
