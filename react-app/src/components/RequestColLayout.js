@@ -4,10 +4,11 @@ import { Container, Row, Col, Card, CardTitle, CardBody, CardText, Button } from
 function RequestColLayout() {
     const [cards, setCards] = useState([]); //initializes array for requests
 
+
     useEffect(() => {
         const fetchRequests = async () => {
             try {
-                const response = await fetch("https://externship2024backend.vercel.app/newrequesttest");
+                const response = await fetch("https://externship2024backend.vercel.app/get_upcoming_rides");
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
