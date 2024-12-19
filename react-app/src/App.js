@@ -9,7 +9,7 @@ import Home from './components/Home';
 import Login from './auth/Login';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true); //CHANGE THIS BACK TO FALSE FOR PRODUCTION RELEASE, THIS IS ONLY TO SIMPLIFY TESTING
   // const currentUser = useAuthStore((state) => state.currentUser);
 
   const [data, setData] = useState({
@@ -51,8 +51,6 @@ function App() {
         <Login onLogin={setIsLoggedIn} />
       )}
       {/* <Home /> */}
-      testing
-      {data.name}
     </>
   );
 }

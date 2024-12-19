@@ -8,16 +8,6 @@ from google.oauth2 import id_token
 from google.auth.transport.requests import Request
 import cachecontrol
 import requests
-from flask import Flask, request, jsonify, session, abort, redirect
-import os
-import pathlib
-import requests
-from flask_cors import CORS # for communication with frontend
-from google_auth_oauthlib.flow import Flow
-from google.oauth2 import id_token
-from google.auth.transport.requests import Request
-import cachecontrol
-import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -33,21 +23,7 @@ flow = Flow.from_client_secrets_file(
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
     redirect_uri="https://externship2024backend.vercel.app/callback"
     )
-CORS(app)
 
-#os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-app.secret_key = "fbUQ4ZavHP2r" # for google oauth
-GOOGLE_CLIENT_ID = "929667896534-icmbfv2sq8mu64akqe57ka1t65novl2b.apps.googleusercontent.com"
-client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
-
-flow = Flow.from_client_secrets_file(
-    client_secrets_file=client_secrets_file,
-    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri="https://externship2024backend.vercel.app/callback"
-    )
-
-offered_rides = [] 
 offered_rides = [] 
 requested_rides = []
 
@@ -55,12 +31,7 @@ requested_rides = []
 def index():
     return "<a href='/login'><button>Login</button></a>"
 
-@app.route("/")
-def index():
-    return "<a href='/login'><button>Login</button></a>"
-
 @app.route('/datatest', methods=['GET'])
-def datatest():
 def datatest():
     return jsonify({
         'status':"request",
@@ -85,14 +56,49 @@ def newrequesttest():
 
 @app.route('/newoffertest', methods=['GET'])
 def newoffertest():
-    return {
+    return jsonify({
         'contact':"1234567890",
         'departure_time':"12/18/2024 06:30 PM",
         'departure_location':"evans",
         'destination':"target center",
         'needed_seats':2,
         'cost_per_seat':5
-    }
+    },{
+        'contact':"0987654321",
+        'departure_time':"12/20/2024 11:00 AM",
+        'departure_location':"burton",
+        'destination':"mall of america",
+        'needed_seats':4,
+        'cost_per_seat':10
+    },{
+        'contact':"0987654321",
+        'departure_time':"12/20/2024 11:00 AM",
+        'departure_location':"burton",
+        'destination':"mall of america",
+        'needed_seats':4,
+        'cost_per_seat':10
+    },{
+        'contact':"0987654321",
+        'departure_time':"12/20/2024 11:00 AM",
+        'departure_location':"burton",
+        'destination':"mall of america",
+        'needed_seats':4,
+        'cost_per_seat':10
+    },{
+        'contact':"0987654321",
+        'departure_time':"12/20/2024 11:00 AM",
+        'departure_location':"burton",
+        'destination':"mall of america",
+        'needed_seats':4,
+        'cost_per_seat':10
+    },{
+        'contact':"0987654321",
+        'departure_time':"12/20/2024 11:00 AM",
+        'departure_location':"burton",
+        'destination':"mall of america",
+        'needed_seats':4,
+        'cost_per_seat':10
+    })
 
 @app.route('/rides/offered', methods=['GET'])
 def get_offered_rides():
@@ -120,7 +126,6 @@ def add_offered_ride():
     offered_rides.append(offered_ride)
     return jsonify(offered_ride), 201
 
-@app.route('/rides/requested', methods=['POST'])
 @app.route('/rides/requested', methods=['POST'])
 def add_requested_ride():
     data = request.get_json()

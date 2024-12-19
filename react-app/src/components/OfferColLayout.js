@@ -1,65 +1,71 @@
-import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, CardTitle, CardBody, CardText, Button } from "reactstrap";
+import { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, CardTitle, CardBody, CardText, Button } from 'reactstrap';
 
 function OfferColLayout() {
-    const [cards, setCards] = useState([]); // State to store the fetched cards
+    const [cards, setCards] = useState([]); //initializes array for offers
 
-    // Function to fetch data from the Flask backend
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchOffers = async () => {
             try {
-                const response = await fetch("https://externship2024backend.vercel.app/newoffertest"); // Change URL if hosted on a different domain
+                console.log("Fetching offers...");
+                const response = await fetch("https://externship2024backend.vercel.app/newoffertest");
                 if (!response.ok) {
-                    throw new Error("Failed to fetch data");
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                const data = await response.json();
-                // Transform the fetched data into a card structure
-                const newCard = {
-                    id: Date.now(), // Unique ID for the card
-                    title: "Offer", // Title for the card
+                const offers = await response.json();
+                console.log("Fetched offers:", offers);
+
+                // structures the data to match the card layout
+                const newCards = offers.map((offer, index) => ({
+                    id: index + 1, // unique ID for each card
+                    title: `Offer ${index + 1}`,
                     text: (
                         <>
-                            Contact info: {data.contact} <br />
-                            Departure time: {data.departure_time} <br />
-                            From: {data.departure_location} <br />
-                            To: {data.destination} <br />
-                            Available seats: {data.needed_seats} <br />
-                            Cost per seat: {data.cost_per_seat} <br />
+                            Contact info: {offer.contact} <br />
+                            Departure time: {offer.departure_time} <br />
+                            From: {offer.departure_location} <br />
+                            To: {offer.destination} <br />
+                            Available seats: {offer.needed_seats} <br />
+                            Cost per seat: {offer.cost_per_seat} <br />
                         </>
                     ),
-                };
-                setCards((prevCards) => [...prevCards, newCard]); // Append new card to the list
+                }));
+
+                setCards(newCards);
             } catch (error) {
-                console.error("Error fetching data:", error);
+                console.error("Error fetching offers:", error);
             }
         };
 
-        fetchData();
-    }, []); // Empty dependency array ensures this runs once on mount
+        fetchOffers();
+    }, []);
 
-    // Function to delete a card
     const deleteCard = (id) => {
-        setCards(cards.filter((card) => card.id !== id));
+        setCards((prevCards) => prevCards.filter((card) => card.id !== id));
     };
 
     return (
-        <Container style={{ marginTop: "3em" }}>
+        <Container style={{ marginTop: '3em' }}>
             <Row md="4" sm="2" xs="1">
                 <h1>Offers</h1>
             </Row>
             <Row md="4" sm="2" xs="1">
                 <Col md="6">
-                    {cards.map((card) => (
-                        <Card key={card.id} className="mb-3">
-                            <CardBody>
-                                <CardTitle>{card.title}</CardTitle>
-                                <CardText>{card.text}</CardText>
-                                <Button color="danger" onClick={() => deleteCard(card.id)}>
-                                    Delete
-                                </Button>
-                            </CardBody>
-                        </Card>
-                    ))}
+                    {cards.length > 0 ? (
+                        cards.map((card) => (
+                            <Card key={card.id} className="mb-3">
+                                <CardBody>
+                                    <CardTitle>{card.title}</CardTitle>
+                                    <CardText>{card.text}</CardText>
+                                    <Button color="danger" onClick={() => deleteCard(card.id)}>
+                                        Delete
+                                    </Button>
+                                </CardBody>
+                            </Card>
+                        ))
+                    ) : (
+                        <p>No offers available</p>
+                    )}
                 </Col>
             </Row>
         </Container>
