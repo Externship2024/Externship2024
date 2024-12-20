@@ -7,7 +7,7 @@ function OfferColLayout() {
     useEffect(() => {
         const fetchOffers = async () => {
             try {
-                const response = await fetch("https://externship2024backend.vercel.app/available-rides");
+                const response = await fetch("https://externship2024backend.vercel.app/rides/offered");
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -19,11 +19,11 @@ function OfferColLayout() {
                     title: `Offer ${index + 1}`,
                     text: (
                         <>
-                            Contact info: {offer.contact} <br />
+                            Contact info: {offer.contact_info} <br />
                             Departure time: {offer.departure_time} <br />
                             From: {offer.departure_location} <br />
                             To: {offer.destination} <br />
-                            Available seats: {offer.needed_seats} <br />
+                            Available seats: {offer.available_seats} <br />
                             Cost per seat: {offer.cost_per_seat} <br />
                         </>
                     ),

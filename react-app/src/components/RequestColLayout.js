@@ -8,7 +8,7 @@ function RequestColLayout() {
     useEffect(() => {
         const fetchRequests = async () => {
             try {
-                const response = await fetch("https://externship2024backend.vercel.app/get_upcoming_rides");
+                const response = await fetch("https://externship2024backend.vercel.app/rides/requested");
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -20,12 +20,12 @@ function RequestColLayout() {
                     title: `Request ${index + 1}`,
                     text: (
                         <>
-                            Contact info: {request.contact} <br />
+                            Contact info: {request.contact_info} <br />
                             Departure time: {request.departure_time} <br />
                             From: {request.departure_location} <br />
                             To: {request.destination} <br />
-                            Needed seats: {request.needed_seats} <br />
-                            Cost per seat: {request.cost_per_seat} <br />
+                            Required seats: {request.required_seats} <br />
+                            Offer per seat: {request.offer_per_seat} <br />
                         </>
                     ),
                 }));

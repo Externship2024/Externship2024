@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import avatar_icon from "../images/avatar_icon.png";
 import pink_plus_icon from "../images/pink_plus_icon.png";
@@ -15,6 +16,8 @@ import RequestColLayout from "./RequestColLayout";
 import OfferColLayout from "./OfferColLayout";
 
 import { Container, Row, Col, Navbar, } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+
 import UserProfile from "./UserProfile";
 
 function Home() {
@@ -24,6 +27,28 @@ function Home() {
   const [activeButton, setActiveButton] = useState("request");
 
   const toggleModal = () => setModal(!modal);
+
+  const handleRequestSubmit = async (formData) => {
+    console.log('Request form data:', formData);
+    try {
+      const response = await axios.post('https://externship2024backend.vercel.app/rides/requested', formData);
+      console.log('Request form submitted successfully:', response.data);
+      toggleModal();
+    } catch (error) {
+      console.error('Error submitting request form:', error.response ? error.response.data : error.message);
+    }
+  };
+
+  const handleOfferSubmit = async (formData) => {
+    console.log('Offer form data:', formData);
+    try {
+      const response = await axios.post('https://externship2024backend.vercel.app/rides/offered', formData);
+      console.log('Offer form submitted successfully:', response.data);
+      toggleModal();
+    } catch (error) {
+      console.error('Error submitting offer form:', error.response ? error.response.data : error.message);
+    }
+  };
 
   const openRequestForm = () => {
     setModalProps({ title: "Adding request" });
@@ -100,6 +125,7 @@ const openOfferForm = () => {
                 />
               </Col>
 
+
               <Col xs="auto" className="align-items-center">
                 <CustomizedButton
                   icon={activeButton === "request" ? yellow_request_ride_icon : request_ride_icon}
@@ -120,6 +146,7 @@ const openOfferForm = () => {
                 />
               </Col>
 
+
               <Col xs="auto" className="align-items-center">
                 <CustomizedButton
                   icon={pink_plus_icon}
@@ -130,19 +157,25 @@ const openOfferForm = () => {
                 />
               </Col>
 
-              <UserProfile className="absolute top-7 right-7" />
+              <Col xs="auto" className="align-items-center">
+                <UserProfile className="absolute top-7 right-7" />
+              </Col>
             </Col>
           </Row>
+          <div>
+            {modal && (
+              <Modal isOpen={modal} toggle={toggleModal}>
+                <ModalHeader toggle={toggleModal}>{modalProps.title}</ModalHeader>
+                <ModalBody>
+                  {activeButton === "request" && <RequestForm onSubmit={handleRequestSubmit} />}
+                  {activeButton === "offer" && <OfferForm onSubmit={handleOfferSubmit} />}
+                </ModalBody>
+              </Modal>
+            )}
+          </div>
         </Container>
       </Navbar>
 
-      <ModalBackdrop
-        title={modalProps.title}
-        FormComponent={formComponent}
-        modal={modal}
-        toggle={toggleModal}
-        handleSubmit={handleSubmit}
-      />
       {
         activeButton === "request" && (
           <Row className="mt-4">

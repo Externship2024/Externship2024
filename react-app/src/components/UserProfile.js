@@ -30,7 +30,7 @@ function UserProfile({ className }) {
     const logout = () => {
         setProfile(null);
         // Optionally, handle logout on your backend
-        window.location.href = 'https://externship2024backend.vercel.app/logout';
+        // window.location.href = 'https://externship2024backend.vercel.app/logout';
     };
 
     return (

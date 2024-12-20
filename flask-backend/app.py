@@ -64,7 +64,7 @@ def upcoming_available_rides():
 def add_ride_handler():
     """adds a requested ride to the requested_rides table"""
     data = request.get_json()  # Assuming data is sent as JSON
-    
+    print(f"Received data: {data}")
     # Extract data from the JSON request
     request_id = data.get('request_id')
     session_id = data.get('session_id')
@@ -76,11 +76,12 @@ def add_ride_handler():
     offer_per_seat = data.get('offer_per_seat')
     
     try:
-        # Call the database utility function
+        # 
         add_requested_ride(request_id, session_id, contact_info, departure_time, departure_location, destination, required_seats, offer_per_seat)
-        return jsonify({"message": "Requested ride added successfully"}), 201
+        return jsonify({"status": "success", "message": "Ride added successfully"}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        print(f"Error adding ride: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route('/add_available_ride', methods=['POST'])
 def add_available_ride_route():
@@ -132,14 +133,14 @@ def newrequesttest():
         'departure_location':"evans",
         'destination':"target center",
         'needed_seats':2,
-        'cost_per_seat':5
+        'offer_per_seat':5
     },{
         'contact':"0987654321",
         'departure_time':"12/20/2024 11:00 AM",
         'departure_location':"burton",
         'destination':"mall of america",
         'needed_seats':4,
-        'cost_per_seat':10
+        'offer_per_seat':10
     })
 
 @app.route('/newoffertest', methods=['GET'])
@@ -149,42 +150,42 @@ def newoffertest():
         'departure_time':"12/18/2024 06:30 PM",
         'departure_location':"evans",
         'destination':"target center",
-        'needed_seats':2,
+        'available_seats':2,
         'cost_per_seat':5
     },{
         'contact':"0987654321",
         'departure_time':"12/20/2024 11:00 AM",
         'departure_location':"burton",
         'destination':"mall of america",
-        'needed_seats':4,
+        'available_seats':4,
         'cost_per_seat':10
     },{
         'contact':"0987654321",
         'departure_time':"12/20/2024 11:00 AM",
         'departure_location':"burton",
         'destination':"mall of america",
-        'needed_seats':4,
+        'available_seats':4,
         'cost_per_seat':10
     },{
         'contact':"0987654321",
         'departure_time':"12/20/2024 11:00 AM",
         'departure_location':"burton",
         'destination':"mall of america",
-        'needed_seats':4,
+        'available_seats':4,
         'cost_per_seat':10
     },{
         'contact':"0987654321",
         'departure_time':"12/20/2024 11:00 AM",
         'departure_location':"burton",
         'destination':"mall of america",
-        'needed_seats':4,
+        'available_seats':4,
         'cost_per_seat':10
     },{
         'contact':"0987654321",
         'departure_time':"12/20/2024 11:00 AM",
         'departure_location':"burton",
         'destination':"mall of america",
-        'needed_seats':4,
+        'available_seats':4,
         'cost_per_seat':10
     })
 
@@ -215,9 +216,10 @@ def add_offered_ride():
     return jsonify(offered_ride), 201
 
 @app.route('/rides/requested', methods=['POST'])
-def add_requested_ride():
+def add_requested_ride_handler():
+    print("Route handler `add_requested_ride_handler` is being executed.")
     data = request.get_json()
-    required_fields = ['contact_info', 'departure_time', 'departure_location', 'destination']
+    required_fields = ['contact_info', 'departure_time', 'departure_location', 'destination', 'required_seats', 'offer_per_seat']
     if any(field not in data for field in required_fields):
         return jsonify({"error": "Missing required fields"}), 400
 
@@ -225,8 +227,11 @@ def add_requested_ride():
         "contact_info": data['contact_info'],
         "departure_time": data['departure_time'],
         "departure_location": data['departure_location'],
-        "destination": data['destination']
+        "destination": data['destination'],
+        "required_seats": data['required_seats'],
+        "offer_per_seat": data['offer_per_seat'],
     }
+    print(f"Adding ride: {requested_ride}")
     requested_rides.append(requested_ride)
     return jsonify(requested_ride), 201
 
