@@ -8,7 +8,6 @@ import offer_ride_icon from "../images/gray_offer_ride_icon.png";
 import green_offer_ride_icon from "../images/green_offer_ride_icon.png";
 import request_ride_icon from "../images/gray_request_ride_icon.png";
 import yellow_request_ride_icon from "../images/yellow_request_ride_icon.png";
-
 import CustomizedButton from "./CustomizedButton";
 import ModalBackdrop from "./ModalBackdrop";
 import RequestForm from "./RequestForm";
@@ -57,12 +56,6 @@ function Home() {
     toggleModal();
   };
 
-  const openOfferForm = () => {
-    setModalProps({ title: "Adding offer" });
-    setFormComponent(() => OfferForm);
-    toggleModal();
-  };
-
   const displayRequestColLayout = () => {
     setActiveButton("request");
   };
@@ -70,6 +63,45 @@ function Home() {
   const displayOfferColLayout = () => {
     setActiveButton("offer");
   };
+
+  const handleSubmit = async (formData) => {
+    try {
+        const response = await fetch('https://externship2024backend.vercel.app/add_available_ride', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        console.log('Success:', result);
+        
+        // Close the modal after successful submission
+        toggleModal();
+        
+        // Optional: Refresh the rides list
+        // You could add a function here to refresh the available rides display
+        
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle error (show error message to user)
+    }
+};
+
+// Update your openOfferForm function
+const openOfferForm = () => {
+    setModalProps({ 
+        title: "Adding offer",
+        onSubmit: handleSubmit // Pass the submit handler
+    });
+    setFormComponent(() => OfferForm);
+    toggleModal();
+};
 
   return (
     <header>

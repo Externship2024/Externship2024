@@ -15,15 +15,21 @@ function OfferForm({ onSubmit }) {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
         console.log(formData);
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(formData);
-    };
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form id="ride-form" onSubmit={handleSubmit}>
             <FormGroup>
                 <Label for="contact_info">Contact Info</Label>
                 <Input type="text" name="contact_info" value={formData.contact_info} onChange={handleChange} id="contact_info" required placeholder="e.g. phone number, social media DMs" />
@@ -47,10 +53,11 @@ function OfferForm({ onSubmit }) {
             <FormGroup>
                 <Label for="cost_per_seat">Cost per Seat</Label>
                 <Input type="number" min="0" max="100" name="cost_per_seat" value={formData.cost_per_seat} onChange={handleChange} id="cost_per_seat" />
+                
             </FormGroup>
             <Button type="submit" color="primary">Post</Button>
         </Form>
-    )
+    );
 }
 
 export default OfferForm;
