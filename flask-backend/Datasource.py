@@ -2,49 +2,49 @@ from datetime import datetime
 import pymssql  # Using pymssql instead of pyodbc
 
 def get_db_connection():
-    conn = pymssql.connect(
+    return pymssql.connect(
         server='rideshareapp.database.windows.net',
         user='externship2024',
         password='u#8Rk!2mLp@Qv7Xz',
-        database='rideshareapp'
+        database='rideshareapp',
     )
-    return conn
 
 # Update all other functions to use the new connection method
 def get_upcoming_rides():
     try:
         conn = get_db_connection()
         cursor = conn.cursor(as_dict=True)  # Return results as dictionaries
-        
+
         current_time = datetime.now()
-        
+
         query = '''
         SELECT request_id, session_id, contact_info, departure_time, departure_location, 
-               destination, required_seats, offer_per_seat, created_at 
+            destination, required_seats, offer_per_seat, created_at 
         FROM dbo.requested_rides 
         WHERE departure_time >= %s  
         ORDER BY departure_time ASC
         '''
-        
+
         cursor.execute(query, (current_time,))
         rides = cursor.fetchall()
-        
+
         # Format datetime objects
         for ride in rides:
             if ride['departure_time']:
                 ride['departure_time'] = ride['departure_time'].isoformat()
             if ride['created_at']:
                 ride['created_at'] = ride['created_at'].isoformat()
-        
+
         cursor.close()
         conn.close()
-        
+
         return rides
-    
+
     except Exception as e:
-        raise Exception(f"Error retrieving upcoming rides: {str(e)}")
+        raise Exception(f"Error retrieving upcoming rides: {str(e)}") from e
 
 def add_requested_ride(request_id, session_id, contact_info, departure_time, departure_location, destination, required_seats, offer_per_seat):
+    print("Database utility function `add_requested_ride` is being executed.")
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -56,7 +56,7 @@ def add_requested_ride(request_id, session_id, contact_info, departure_time, dep
         (request_id, session_id, contact_info, departure_location, destination, required_seats, offer_per_seat, departure_time)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     '''
-    cursor.execute(query, (request_id, session_id, contact_info, departure_location, destination, required_seats, offer_per_seat, departure_time))
+    cursor.execute(query, (request_id, session_id, contact_info, departure_time, departure_location, destination, required_seats, offer_per_seat))
     conn.commit()
     cursor.close()
     conn.close()
@@ -65,34 +65,34 @@ def get_available_rides():
     try:
         conn = get_db_connection()
         cursor = conn.cursor(as_dict=True)
-        
+
         current_time = datetime.now()
 
         query = '''
         SELECT ride_id, contact_info, departure_time, departure_location, destination, 
-               available_seats, cost_per_seat, created_at
+            available_seats, cost_per_seat, created_at
         FROM dbo.available_rides
         WHERE departure_time >= %s
         ORDER BY departure_time ASC
         '''
-        
+
         cursor.execute(query, (current_time,))
         available_rides = cursor.fetchall()
-        
+
         # Format datetime objects
         for ride in available_rides:
             if ride['departure_time']:
                 ride['departure_time'] = ride['departure_time'].isoformat()
             if ride['created_at']:
                 ride['created_at'] = ride['created_at'].isoformat()
-        
+
         cursor.close()
         conn.close()
-        
+
         return available_rides
-    
+
     except Exception as e:
-        raise Exception(f"Error retrieving available rides: {str(e)}")
+        raise Exception(f"Error retrieving available rides: {str(e)}") from e
 
 def delete_specific_ride(ride_id=None, request_id=None, session_id=None):
     try:
@@ -116,7 +116,7 @@ def delete_specific_ride(ride_id=None, request_id=None, session_id=None):
         conn.commit()
 
     except Exception as e:
-        raise Exception(f"Error deleting specific ride: {str(e)}")
+        raise Exception(f"Error deleting specific ride: {str(e)}") from e
 
     finally:
         cursor.close()

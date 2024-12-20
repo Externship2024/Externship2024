@@ -6,7 +6,7 @@ function ModalBackdrop({ title, FormComponent, modal, toggle, handleSubmit }) {
       <Modal isOpen={modal} toggle={toggle} backdrop="static">
         <ModalHeader >{title}</ModalHeader>
         <ModalBody>
-          <FormComponent handleSubmit={handleSubmit} />
+          <FormComponent />
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>

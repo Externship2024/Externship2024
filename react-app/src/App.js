@@ -13,12 +13,12 @@ function App() {
   // const currentUser = useAuthStore((state) => state.currentUser);
 
   const [data, setData] = useState({
-    contact: "",
+    contact_info: "",
     departure_time: "",
     departure_location: "",
     destination: "",
-    needed_seats: 0,
-    cost_per_seat: 0
+    required_seats: 0,
+    offer_per_seat: 0
   })
 
   useEffect(() => {
