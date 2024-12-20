@@ -15,18 +15,12 @@ function OfferForm({ onSubmit }) {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
         console.log(formData);
-    });
-
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(formData);
+    };
 
     return (
         <Form id="ride-form" onSubmit={handleSubmit}>
