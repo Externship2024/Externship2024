@@ -11,7 +11,6 @@ import requests
 
 app = Flask(__name__)
 CORS(app)
-
 #os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 app.secret_key = "fbUQ4ZavHP2r" # for google oauth
@@ -276,5 +275,5 @@ def logout():
 def protected_area():
     return "Protected <a href='/logout'><button>Logout</button></a>"
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+#    app.run(debug=True)
